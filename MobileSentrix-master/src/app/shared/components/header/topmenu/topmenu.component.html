@@ -1,0 +1,42 @@
+<div id="menuTemplate" class="menu-section">
+  <div class="menu-control">
+    <ejs-menu #menubar  [items]='dataSource' [fields]='menuFields' (beforeClose)="onBeforeClose($event)" (select)="select($event)">
+      <ng-template #template let-dataSource="">
+        {{dataSource.category}}
+        <div *ngIf="dataSource.value && dataSource.url" [ngStyle]="{'background-image': 'url(src/images/platforms/' + dataSource.url + '.png)'}"
+          class="e-avatar e-avatar-small image">{{dataSource.value}}</div>
+        <ul *ngIf="dataSource.support">
+          <li *ngFor="let val of dataSource.support">
+            {{val.value}}
+            <span *ngIf="val.count" class='e-badge e-badge-success'>{{val.count}}</span>
+          </li>
+        </ul>
+        <div *ngIf="dataSource.login" tabindex="0" class="e-card">
+          <div class="e-card-header">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">REGISTERED CUSTOMERS</div>
+            </div>
+          </div>
+          <div class="e-card-content">
+            <ejs-textbox  [(ngModel)]="username" placeholder="Email/Phone/Username*" floatLabelType="Auto"></ejs-textbox>
+            <ejs-textbox  [(ngModel)]="password" type="password" placeholder="Password*" floatLabelType="Auto"></ejs-textbox>
+          </div>
+          <div class="e-card-actions">
+            <button ejs-button cssClass="e-info" (click)="login()">Login</button>
+            <br />
+            <button ejs-button cssClass="e-info">New User</button>
+            <br />
+            <button ejs-button cssClass="e-flat" [isPrimary]="true">Forget Password?</button>
+          </div>
+        </div>
+      </ng-template>
+    </ejs-menu>
+  </div>
+
+</div>
+<ejs-toolbar #toolbar (created)="onCreated()">
+  <e-items>
+    <e-item [template]='menuTemplate' align='Right'></e-item>
+    <e-item prefixIcon='em-icons e-shopping-cart' text="Free Shipping on Orders Over $450" align='Left'></e-item>
+  </e-items>
+</ejs-toolbar>
